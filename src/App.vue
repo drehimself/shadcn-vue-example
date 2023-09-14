@@ -92,19 +92,18 @@ const accordionItems = [
 ]
 
 function toggleDarkMode() {
-  const body = document.querySelector('body')
-
-  const isDark = body?.classList.contains('dark')
-
-  isDark ? body?.classList.remove('dark') : body?.classList.add('dark')
+  const root = document.querySelector(':root')
+  root?.classList.toggle('dark')
 }
 
-function changeTheme() {
+function changeTheme(theme: string): void {
   let root = document.querySelector(':root')
-  let dark = document.querySelector(':root .dark')
 
-  root?.style.setProperty('--primary', '120 100% 45%')
-  dark?.style.setProperty('--primary', '210 100% 50%')
+  const isDark = root?.classList.contains('dark')
+
+  root.className = ''
+  if (isDark) root?.classList.add('dark')
+  root?.classList.add(theme)
 }
 </script>
 
@@ -112,9 +111,15 @@ function changeTheme() {
   <div class="container py-8">
     <div class="my-8">
       <Button @click="toggleDarkMode">Toggle Dark Mode</Button>
-      <Button @click="changeTheme" variant="destructive">Change Theme</Button>
-      <Button variant="outline">Click me</Button>
-      <Button variant="secondary">Click me</Button>
+      <Button @click="changeTheme('theme-green')" variant="outline"
+        >Change Theme Green</Button
+      >
+      <Button @click="changeTheme('theme-red')" variant="outline"
+        >Change Theme Red</Button
+      >
+      <Button @click="changeTheme('theme-blue')" variant="secondary"
+        >Change Theme Blue</Button
+      >
     </div>
 
     <section class="my-8">
